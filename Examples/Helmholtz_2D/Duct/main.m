@@ -23,9 +23,10 @@ global omega
 omega = 20;
 
 % Mesh & domain properties (if external mesher)
-MeshLength = 0.05;
-Length = 2;
-Height = 1;
+Mesh.MeshLength = 0.05;
+Mesh.L = 2;
+Mesh.H = 1;
+Mesh.File = 'rectangle_T3.geo' ; 
 
 % Initialise the geometry description
 INIT_GEOMETRY
@@ -34,7 +35,7 @@ INIT_GEOMETRY
 % load('mesh_example');
 % ADD_DOMAIN(node,edge,element);
 % Option 2: use gmsh as an external mesher (http://geuz.org/gmsh/#Download)
-GmshLaunch('rectangle_T3',{'H' 'L' 'MeshLength'},[Height Length MeshLength],3,2,'Mesh.mat');
+RunGmsh(Mesh.File,Mesh,2,'Mesh');
 load('Mesh.mat'); delete('Mesh.mat');
 
 % Construct the list of elements and nodes
