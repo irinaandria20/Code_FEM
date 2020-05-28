@@ -2,3 +2,4 @@ Creeons un nouveau test pour gérer les conflits
 Cherchons un conflit
 Nouveau Conflit
 A la recherche des confilts
+Truandisme
