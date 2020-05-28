@@ -1,1 +1,3 @@
 Creeons un nouveau test pour gérer les conflits
+Cherchons un conflit
+Nouveau Conflit
