@@ -66,6 +66,7 @@ Re = zeros(3,3);
 Ve = zeros(3,1);
 
 % Integrate over the reference elements using the Gauss points
+% Méthode de Gauss
 for n=1:N_GAUSS_POINT
     % Coordinates of the Gauss point on the reference elements
     u = GAUSS_POINT(1,n);
@@ -84,11 +85,13 @@ for n=1:N_GAUSS_POINT
     N = [1-u-v u v];
     % Shape functions for the gradient of the solution
     GRAD = J\[-1 1 0;-1 0 1];
-    % Material derivative
-    D0pDt = -1i*omega*N + (N*U0')*GRAD;
+    % Material derivative : dérivée particulaire
+    % Dérivée cartésienne ? 
+    % D0pDt = -1i*omega*N + (N*U0')*GRAD;
+    D0pDt = -1i*omega*N ;
     
     % Add the contribution to the element matrix
-    Ke = Ke + GAUSS_WEIGHT(n)*( C0^2*(GRAD'*GRAD) - D0pDt'*D0pDt )*detJ;
+    Ke = Ke + GAUSS_WEIGHT(n)*( C0^2*(GRAD'*GRAD) - omega^2*N'*N )*detJ;
     % Add the contribution to the right-hand side
     Fe = Fe + GAUSS_WEIGHT(n)*( N.'*N*S.' )*detJ;
 end

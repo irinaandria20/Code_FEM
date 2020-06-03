@@ -36,7 +36,7 @@ INIT_GEOMETRY
 % ADD_DOMAIN(node,edge,element);
 % Option 2: use gmsh as an external mesher (http://geuz.org/gmsh/#Download)
 RunGmsh(Mesh.File,Mesh,2,'Mesh');
-load('Mesh.mat'); delete('Mesh.mat');
+load('Mesh');
 
 % Construct the list of elements and nodes
 BUILD_MODEL

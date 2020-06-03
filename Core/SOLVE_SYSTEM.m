@@ -24,6 +24,7 @@ fprintf('%i constraints', length(L));
 Lbar = find(diag(R)==0);
 
 % Change of variables to impose the linear constraints
+% Pseudo-élimination ?
 R = R + sparse(Lbar, Lbar, ones(1, length(Lbar)), N_DOF, N_DOF);
 R = inv(R);
 K = R'*K*R;

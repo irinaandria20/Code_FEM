@@ -17,11 +17,13 @@ function Gmsh2CodeFem(infile,outfile)
 % http://www.geuz.org/gmsh/doc/texinfo/gmsh_10.html#SEC62
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Open the file to read
 fid = fopen(infile,'rt');
 if fid < 0
     error('file not found !!');
 end
-%
+
+% Pass the first ligns with the data on the MeshFormat
 fgetl(fid); fgetl(fid); fgetl(fid); fgetl(fid);
 %
 N_NODE = str2double(fgetl(fid));
@@ -38,9 +40,9 @@ NODE(1:3,temp(1,:)) = [temp(2,:); temp(3,:); temp(4,:)];
 NUMNODE(temp(1,:))=1:N_NODE; % Gmesh numerotation index
 %
 %%%%%%%%%%%%%%%%%%%%%  ELEMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-temp = fgetl(fid); %
-temp = fgetl(fid); % on lit la ligne $ENDNOD
-temp = fgetl(fid); % on lit la ligne $ELEM
+fgetl(fid); %
+fgetl(fid); % on lit la ligne $ENDNOD
+fgetl(fid); % on lit la ligne $ELEM
 
 %
 N_ELEMENT = str2double(fgetl(fid));
@@ -233,13 +235,15 @@ NODE_ID = 1:N_NODE;
 % détermination de N_DOMAIN
 N_DOMAIN = max(ELEMENT_DOMAIN(1,:));
 
+% Note the domain of each node
 for k = N_DOMAIN:-1:1
     ElemList = find(ELEMENT_DOMAIN(1,:) == k);
-    Node_list = ELEMENT(:,ElemList);
+    Node_list = ELEMENT(:,ElemList); 
     Node_list = Node_list(:);
     Node_list = Node_list(find(Node_list ~= 0));
     NODE_DOMAIN(1,Node_list') = k*ones(size(Node_list'));
 end
+
 
 %if N_DIM == 2
 %    NODE = NODE(1:2,:);

@@ -15,6 +15,8 @@
 
 global LIBRARY_PATH
 
+% Search the directory with the public core
+%------------------------------------------
 DIRECTORY = fullfile('Code_FEM','Core');
 
 % Get the directories in the path
@@ -40,9 +42,11 @@ if ~strcmpi(token(end-length(DIRECTORY)+1:end),DIRECTORY)
 else
     LIBRARY_PATH{1} = token(1:end-5);
 end
+% -------------------------------------------------------
 
 
-
+% Search the private directory
+% -------------------------------------------------------
 DIRECTORY_PRIVATE = fullfile('Code_FEM_Private','Core');
 % Get the directories in the path
 P = path;
@@ -65,6 +69,8 @@ end
 if strcmpi(token(end-length(DIRECTORY_PRIVATE)+1:end),DIRECTORY_PRIVATE)
     LIBRARY_PATH{2} = token(1:end-5);
 end
+% ----------------------------------------------------------------
+
 
 global METIS_PATH
 

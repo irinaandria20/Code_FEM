@@ -33,6 +33,7 @@ for j=1:length(list)
     % The list of DOFs for the current element
     dof_list = DOF_ELEMENT(1:N_DOF_ELEMENT(list(j)),list(j));
     % Store the entries for the matrix
+    % Matrice creuse
     [iie,jje,sse] = find(Ke);
     if ~isempty(iie)
         aa = aa(end) + (1:length(iie));

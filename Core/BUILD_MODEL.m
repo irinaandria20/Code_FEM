@@ -37,6 +37,7 @@ INTERFACE_NAME = cell(N_DOMAIN,N_DOMAIN);
 DOMAIN_METHOD = cell(N_DOMAIN,N_DOMAIN);
 max_elem = 0;
 max_node = 0;
+
 % Loop over all the domains
 for k=1:N_DOMAIN
     % Create a list of elements part of the current domain
@@ -109,6 +110,6 @@ BOUNDARY_DATA = full(BOUNDARY_DATA(1:max_elem,:));
 fprintf('%i domains, %i nodes, %i elements\n',N_DOMAIN,N_NODE,N_ELEMENT);
 
 % Remove temporary variables
-clear k j n temp list number name ii jj ss
+clear k j n temp list number name 
 clear max_node max_elem
 clear public private
