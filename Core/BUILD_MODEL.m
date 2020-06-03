@@ -23,6 +23,7 @@ global INTERFACE INTERFACE_NAME
 global DOMAIN_METHOD DOMAIN_PATH
 fprintf('BUILD_MODEL: ');
 
+%1
 if isempty(N_RHS)
     N_RHS = 1;
 end
@@ -38,12 +39,15 @@ DOMAIN_METHOD = cell(N_DOMAIN,N_DOMAIN);
 max_elem = 0;
 max_node = 0;
 
+%2
 % Loop over all the domains
 for k=1:N_DOMAIN
+    %a
     % Create a list of elements part of the current domain
     list = find(ELEMENT_DOMAIN(1,:)==k);
     % Call the 'domain' function to get the info about it
     temp = domain(k);
+    %b
     % Store the problem name
     PROBLEM = temp{1}{1};
     % Store the method to be used for this domain
@@ -60,8 +64,10 @@ for k=1:N_DOMAIN
     if (ZExist == 0)
        error('Elementary folder routine could not be accessed!') 
     end
+    %c
     % Loop over the elements of the domain
     for j=1:length(list)
+        %i
         % If it is a domain element
         if ELEMENT_DOMAIN(2,list(j))==0
             if size(temp{1},2)==4
@@ -74,6 +80,7 @@ for k=1:N_DOMAIN
                 ELEMENT_LIST(list(j)) = number;
             end
         end
+        %ii
         % If it is a boundary element
         if ELEMENT_DOMAIN(2,list(j))==1
             % Call the 'boundary' function to get the description of the
@@ -97,6 +104,7 @@ for k=1:N_DOMAIN
         INTERFACE_NAME{k,temp{j}{1}} = temp{j}{3};
         INTERFACE{k,temp{j}{1}} = temp{j}{4};
     end
+    %d
     % Call the 'domain' function to get the data associated with the nodes
     list = find(NODE_DOMAIN==k);
     temp = domain(k,NODE(:,list));
@@ -104,6 +112,7 @@ for k=1:N_DOMAIN
     max_node = max(max_node,size(temp,1));
 end
 
+%3
 NODE_DATA = full(NODE_DATA(1:max_node,:));
 BOUNDARY_DATA = full(BOUNDARY_DATA(1:max_elem,:));
 
@@ -112,4 +121,3 @@ fprintf('%i domains, %i nodes, %i elements\n',N_DOMAIN,N_NODE,N_ELEMENT);
 % Remove temporary variables
 clear k j n temp list number name 
 clear max_node max_elem
-clear public private
