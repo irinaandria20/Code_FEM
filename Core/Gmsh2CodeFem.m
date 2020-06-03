@@ -25,10 +25,16 @@ end
 
 % Pass the first ligns with the data on the MeshFormat
 fgetl(fid); fgetl(fid); fgetl(fid); fgetl(fid);
-%
+
+% 1.
+%%%%%%%%%%%%%%%%%%%%%%%%  NODE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 N_NODE = str2double(fgetl(fid));
 NUMNODE = zeros(1,N_NODE);
+%temp stores the coordinates of all nodes of the geometry
 temp = fscanf(fid,'%f%f%f%f',[4,N_NODE]);
+%temp(1,:) : NODE_ID
+%temp(2:4,:) : x,y,z coordinates 
+
 % -----------------
 % COORDINATES
 % -----------------
@@ -39,6 +45,7 @@ NODE(1:3,temp(1,:)) = [temp(2,:); temp(3,:); temp(4,:)];
 % ------------------
 NUMNODE(temp(1,:))=1:N_NODE; % Gmesh numerotation index
 %
+%2.
 %%%%%%%%%%%%%%%%%%%%%  ELEMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 fgetl(fid); %
 fgetl(fid); % on lit la ligne $ENDNOD
@@ -52,7 +59,7 @@ N_NODE_ELEMENT = zeros(1,N_ELEMENT);
 NODE_DOMAIN = ones(1,N_NODE);
 N_DIM = 2;
 
-%
+%3.
 for k=1:N_ELEMENT
     %
     out = str2num(fgetl(fid));
@@ -229,12 +236,14 @@ end
 %
 fclose(fid);
 
+%4.
 ELEMENT_ID = 1:N_ELEMENT;
 NODE_ID = 1:N_NODE;
 
 % détermination de N_DOMAIN
 N_DOMAIN = max(ELEMENT_DOMAIN(1,:));
 
+%5.
 % Note the domain of each node
 for k = N_DOMAIN:-1:1
     ElemList = find(ELEMENT_DOMAIN(1,:) == k);
@@ -249,5 +258,6 @@ end
 %    NODE = NODE(1:2,:);
 %end
 
+%6.
 % Copy the mesh information in a mat file
 save(outfile,'N_DIM','N_NODE','NODE','N_ELEMENT','N_NODE_ELEMENT','ELEMENT','N_DOMAIN','ELEMENT_DOMAIN','NODE_DOMAIN','ELEMENT_ID','NODE_ID');

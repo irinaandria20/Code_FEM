@@ -1,4 +1,15 @@
 function RunGmsh(GeoFile, Parameters, NrOfdimensions, Output)
+% This function copy the content of the GeoFile.geo file and add the 
+% defintions of parameters in the Output.geo File which is converted 
+% in .msh format.
+% At the end all the elements are created with the function Gmsh2CodeFEM
+%-----------------------------------------------------------------------
+% GeoFile : File in which the data will be recovered
+% Parameters : Structure which contained the data on the parameters of the
+% mesh.
+% NrOfdimensions : Number of dimensions of the problem
+% Output : Name of the output file (.geo and .msh)
+%-----------------------------------------------------------------------
 
 % Open the output file
 outfile = fopen([Output '.geo'], 'w+');
